@@ -11,9 +11,6 @@ from .exceptions import (
 )
 
 
-# -------------------------------------
-# Faculty Login Form
-# -------------------------------------
 class FacultyLoginForm(forms.Form):
 
     username = forms.CharField(
@@ -36,9 +33,6 @@ class FacultyLoginForm(forms.Form):
     )
 
 
-# -------------------------------------
-# Student Form
-# -------------------------------------
 class StudentForm(forms.ModelForm):
 
     class Meta:
@@ -128,9 +122,6 @@ class StudentForm(forms.ModelForm):
             ),
         }
 
-    # --------------------------
-    # Student ID Validation
-    # --------------------------
     def clean_student_id(self):
 
         student_id = self.cleaned_data["student_id"]
@@ -142,9 +133,6 @@ class StudentForm(forms.ModelForm):
 
         return student_id
 
-    # --------------------------
-    # Email Validation
-    # --------------------------
     def clean_email(self):
 
         email = self.cleaned_data["email"]
@@ -156,9 +144,6 @@ class StudentForm(forms.ModelForm):
 
         return email
 
-    # --------------------------
-    # Marks Validation
-    # --------------------------
     def clean(self):
 
         cleaned_data = super().clean()
@@ -188,9 +173,6 @@ class StudentForm(forms.ModelForm):
         return cleaned_data
 
 
-# -------------------------------------
-# CSV Upload Form
-# -------------------------------------
 class CSVUploadForm(forms.Form):
 
     csv_file = forms.FileField(
