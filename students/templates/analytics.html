@@ -1,0 +1,136 @@
+<html>
+<head>
+<title>Analytics Dashboard | GradeFlow</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+}
+
+.container{
+    width:90%;
+    margin:40px auto;
+}
+
+.heading{
+    margin-bottom:30px;
+}
+
+.heading h2{
+    color:#333;
+}
+.chart-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(400px,1fr));
+    gap:25px;
+}
+
+.card{
+    background:white;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(0,0,0,.15);
+    overflow:hidden;
+}
+
+.card-header{
+    background:#0d6efd;
+    color:white;
+    padding:15px;
+    font-size:18px;
+    font-weight:bold;
+}
+
+.dark{
+    background:#343a40;
+}
+
+.gray{
+    background:#6c757d;
+}
+
+.card-body{
+    padding:20px;
+}
+
+canvas{
+    width:100% !important;
+    height:320px !important;
+}
+@media(max-width:768px){
+
+.chart-container{
+    grid-template-columns:1fr;
+}
+
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<div class="heading">
+
+<h2>Academic Analytics Dashboard</h2>
+
+</div>
+
+<div class="chart-container">
+
+<div class="card">
+
+<div class="card-header dark">
+
+Pass / Fail Analysis
+
+</div>
+
+<div class="card-body">
+
+<canvas id="pieChart"></canvas>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-header gray">
+
+Student Statistics
+
+</div>
+
+<div class="card-body">
+
+<canvas id="barChart"></canvas>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<input type="hidden" id="totalStudents" value="{{ total_students }}">
+
+<input type="hidden" id="passedStudents" value="{{ passed_students }}">
+
+<input type="hidden" id="failedStudents" value="{{ failed_students }}">
+
+<input type="hidden" id="riskStudents" value="{{ at_risk_students }}">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/analytics.js' %}"></script>
+
+</body>
+</html>

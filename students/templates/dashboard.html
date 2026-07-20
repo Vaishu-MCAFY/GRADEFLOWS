@@ -1,0 +1,205 @@
+<html>
+<head>
+    <title>Dashboard | GradeFlow</title>
+
+    <style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+}
+
+.container{
+    width:90%;
+    margin:40px auto;
+}
+.header{
+    margin-bottom:30px;
+}
+
+.header h1{
+    color:#222;
+    margin-bottom:8px;
+}
+
+.header p{
+    color:#666;
+}
+.card-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+}
+
+.card{
+    padding:25px;
+    border-radius:12px;
+    color:white;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+.card h3{
+    margin-bottom:15px;
+}
+
+.card h1{
+    font-size:40px;
+}
+
+.card h2{
+    margin-bottom:10px;
+}
+
+.blue{
+    background:#0d6efd;
+}
+
+.green{
+    background:#198754;
+}
+
+.yellow{
+    background:#ffc107;
+    color:#000;
+}
+
+.red{
+    background:#dc3545;
+}
+
+.gray{
+    background:#6c757d;
+}
+
+.cyan{
+    background:#0dcaf0;
+}
+
+.actions{
+    margin-top:40px;
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+}
+
+.actions h2{
+    margin-bottom:20px;
+}
+
+.action-buttons{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+    gap:20px;
+}
+
+.action-buttons a{
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    background:#0d6efd;
+    color:white;
+    padding:15px;
+    border-radius:8px;
+    transition:.3s;
+    font-size:18px;
+}
+
+.action-buttons a:hover{
+    background:#084db5;
+}
+
+@media(max-width:768px){
+
+    .card h1{
+        font-size:32px;
+    }
+
+    .header h1{
+        font-size:28px;
+    }
+
+}
+
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <div class="header">
+
+        <h1>Faculty Dashboard</h1>
+
+        <p>Welcome {{ request.user.username }}</p>
+
+    </div>
+
+    <div class="card-container">
+
+        <div class="card blue">
+            <h3>Total Students</h3>
+            <h1>{{ total_students }}</h1>
+        </div>
+
+        <div class="card green">
+            <h3>Topper</h3>
+
+            {% if topper %}
+                <h2>{{ topper.name }}</h2>
+                <p>Average : {{ topper.average_marks }}%</p>
+            {% else %}
+                <h2>No Data</h2>
+            {% endif %}
+
+        </div>
+
+        <div class="card yellow">
+            <h3>Class Average</h3>
+            <h1>{{ average_marks }}%</h1>
+        </div>
+
+        <div class="card red">
+            <h3>Failed Students</h3>
+            <h1>{{ failed_students }}</h1>
+        </div>
+
+        <div class="card gray">
+            <h3>At Risk Students</h3>
+            <h1>{{ at_risk_students }}</h1>
+        </div>
+
+        <div class="card cyan">
+            <h3>Pass Percentage</h3>
+            <h1>{{ pass_percentage }}%</h1>
+        </div>
+
+    </div>
+    <div class="actions">
+
+        <h2>Quick Actions</h2>
+
+        <div class="action-buttons">
+      <a href="{% url 'add_student' %}">Add Student</a>
+
+      <a href="{% url 'student_list' %}">View Students</a>
+
+       <a href="{% url 'upload_csv' %}">Upload CSV</a>
+
+       <a href="{% url 'analytics' %}">Analytics</a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>

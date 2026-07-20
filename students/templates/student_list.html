@@ -1,0 +1,377 @@
+<html>
+<head>
+<title>Student Management | GradeFlow</title>
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+}
+
+.container{
+    width:95%;
+    margin:30px auto;
+}
+
+/* Header */
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:25px;
+    flex-wrap:wrap;
+}
+
+.header h2{
+    color:#333;
+}
+
+.header p{
+    color:#666;
+    margin-top:5px;
+}
+
+.add-btn{
+    background:#198754;
+    color:white;
+    text-decoration:none;
+    padding:12px 20px;
+    border-radius:6px;
+}
+
+.add-btn:hover{
+    background:#157347;
+}
+
+.search-box{
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    margin-bottom:25px;
+    box-shadow:0 4px 10px rgba(0,0,0,.1);
+}
+
+.search-form{
+    display:grid;
+    grid-template-columns:2fr 1.5fr 1fr;
+    gap:15px;
+}
+
+.search-form input,
+.search-form select{
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+.search-form button{
+    background:#0d6efd;
+    color:white;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.search-form button:hover{
+    background:#0b5ed7;
+}
+
+
+.table-box{
+    background:white;
+    border-radius:10px;
+    box-shadow:0 4px 10px rgba(0,0,0,.1);
+    overflow:auto;
+}
+
+.table-title{
+    background:#0d6efd;
+    color:white;
+    padding:15px;
+    font-size:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+th{
+    background:#343a40;
+    color:white;
+    padding:12px;
+}
+
+td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid #ddd;
+}
+
+tr:hover{
+    background:#f2f2f2;
+}
+
+
+.grade{
+    background:#198754;
+    color:white;
+    padding:5px 10px;
+    border-radius:5px;
+}
+
+.pass{
+    display:inline-block;
+    background:#0d6efd;
+    color:white;
+    padding:5px 10px;
+    border-radius:5px;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.fail{
+    display:inline-block;
+    background:#dc3545;
+    color:white;
+    padding:5px 10px;
+    border-radius:5px;
+    font-size:14px;
+    font-weight:bold;
+}
+
+
+.action-btn{
+    color:white;
+    text-decoration:none;
+    padding:6px 10px;
+    border-radius:5px;
+    margin:2px;
+    display:inline-block;
+    font-size:14px;
+}
+
+.edit{
+    background:#ffc107;
+    color:black;
+}
+
+.delete{
+    background:#dc3545;
+}
+
+.report{
+    background:#0dcaf0;
+    color:black;
+}
+
+.edit:hover{
+    background:#e0a800;
+}
+
+.delete:hover{
+    background:#bb2d3b;
+}
+
+.report:hover{
+    background:#31d2f2;
+}
+
+
+@media(max-width:768px){
+
+.search-form{
+    grid-template-columns:1fr;
+}
+
+.header{
+    flex-direction:column;
+    align-items:flex-start;
+}
+
+.add-btn{
+    margin-top:15px;
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+
+<div>
+
+<h2>Student Management</h2>
+
+<p>View, Search, Update and Delete Students</p>
+
+</div>
+
+<a href="{% url 'add_student' %}" class="add-btn">
+Add Student
+</a>
+
+</div>
+
+<div class="search-box">
+
+<form method="GET" class="search-form">
+
+<input
+type="text"
+name="search"
+value="{{ search }}"
+placeholder="Search Student ID / Name / Email">
+
+<select name="department">
+
+<option value="">All Departments</option>
+
+{% for dept in departments %}
+
+<option
+value="{{ dept }}"
+{% if dept == selected_department %}selected{% endif %}>
+
+{{ dept }}
+
+</option>
+
+{% endfor %}
+
+</select>
+
+<button type="submit">
+
+Search
+
+</button>
+
+</form>
+
+</div>
+
+<div class="table-box">
+
+<div class="table-title">
+
+Student List
+
+</div>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>ID</th>
+
+<th>Name</th>
+
+<th>Email</th>
+
+<th>Department</th>
+
+<th>Average</th>
+
+<th>Grade</th>
+
+<th>Result</th>
+
+<th>Actions</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+
+<td>{{ student.student_id }}</td>
+
+<td>{{ student.name }}</td>
+
+<td>{{ student.email }}</td>
+
+<td>{{ student.department }}</td>
+
+<td>{{ student.average_marks }}</td>
+
+<td>
+
+<span class="grade">
+
+{{ student.grade }}
+
+</span>
+
+</td>
+
+<td>
+
+
+<span class="pass">
+
+Pass
+
+</span>
+
+
+<span class="fail">
+
+Fail
+
+</span>
+
+</td>
+
+<td>
+
+<a href="{% url 'update_student' student.id %}" class="action-btn edit">
+
+Edit
+
+</a>
+
+<a href="{% url 'delete_student' student.id %}" class="action-btn delete">
+
+Delete
+
+</a>
+
+<a href="{% url 'individual_report' student.id %}" class="action-btn report">
+
+Report
+
+</a>
+
+</td>
+
+</tr>
+
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</body>
+</html>

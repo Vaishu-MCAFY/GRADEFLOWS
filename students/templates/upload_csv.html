@@ -1,0 +1,314 @@
+<html>
+<head>
+<title>Upload CSV | GradeFlow</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+}
+
+.container{
+    width:90%;
+    max-width:900px;
+    margin:40px auto;
+}
+
+.card{
+    background:#fff;
+    border-radius:10px;
+    overflow:hidden;
+    box-shadow:0 5px 15px rgba(0,0,0,.15);
+    margin-bottom:30px;
+}
+
+.card-header{
+    background:#0d6efd;
+    color:#fff;
+    padding:18px 20px;
+}
+
+.card-header h2,
+.card-header h3{
+    font-size:24px;
+}
+
+.card-body{
+    padding:25px;
+}
+
+.form-group{
+    margin-bottom:20px;
+}
+
+.form-group label{
+    display:block;
+    margin-bottom:10px;
+    font-weight:bold;
+}
+
+.form-group input[type=file]{
+    width:100%;
+    padding:10px;
+    border:1px solid #ccc;
+    border-radius:5px;
+}
+
+.error{
+    color:red;
+    margin-top:8px;
+}
+
+/* Upload Button */
+
+.upload-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:5px;
+    background:#198754;
+    color:#fff;
+    font-size:17px;
+    cursor:pointer;
+}
+
+.upload-btn:hover{
+    background:#157347;
+}
+
+.info{
+    background:#0dcaf0;
+}
+
+.secondary{
+    background:#6c757d;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+
+table th{
+    background:#e9ecef;
+    padding:12px;
+    border:1px solid #ccc;
+}
+
+table td{
+    padding:12px;
+    border:1px solid #ccc;
+}
+
+
+pre{
+    background:#f8f9fa;
+    padding:15px;
+    border-radius:5px;
+    overflow:auto;
+    margin-bottom:20px;
+}
+
+/* Download Button */
+
+.download-btn{
+    display:inline-block;
+    background:#0d6efd;
+    color:#fff;
+    text-decoration:none;
+    padding:10px 18px;
+    border-radius:5px;
+}
+
+.download-btn:hover{
+    background:#084298;
+}
+
+/* Responsive */
+
+@media(max-width:768px){
+
+.container{
+    width:95%;
+}
+
+table{
+    font-size:14px;
+}
+
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+<!-- Upload Card -->
+
+<div class="card">
+
+<div class="card-header">
+
+<h2>Upload Student CSV</h2>
+
+</div>
+
+<div class="card-body">
+
+<form method="POST" enctype="multipart/form-data">
+
+{% csrf_token %}
+
+<div class="form-group">
+
+<label>Select CSV File</label>
+
+{{ form.csv_file }}
+
+{% if form.csv_file.errors %}
+
+<div class="error">
+
+{{ form.csv_file.errors }}
+
+</div>
+
+{% endif %}
+
+</div>
+
+<button type="submit" class="upload-btn">
+
+Upload CSV
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="card-header info">
+
+<h3>CSV File Format</h3>
+
+</div>
+
+<div class="card-body">
+
+<p>The CSV file should contain the following columns:</p>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Column Name</th>
+
+<th>Description</th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+<tr>
+<td>student_id</td>
+<td>Student ID (Example: ST101)</td>
+</tr>
+
+<tr>
+<td>name</td>
+<td>Student Name</td>
+</tr>
+
+<tr>
+<td>email</td>
+<td>Email Address</td>
+</tr>
+
+<tr>
+<td>department</td>
+<td>Department Name</td>
+</tr>
+
+<tr>
+<td>subject1</td>
+<td>Marks (0–100)</td>
+</tr>
+
+<tr>
+<td>subject2</td>
+<td>Marks (0–100)</td>
+</tr>
+
+<tr>
+<td>subject3</td>
+<td>Marks (0–100)</td>
+</tr>
+
+<tr>
+<td>subject4</td>
+<td>Marks (0–100)</td>
+</tr>
+
+<tr>
+<td>subject5</td>
+<td>Marks (0–100)</td>
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-header secondary">
+
+<h3>Sample CSV</h3>
+
+</div>
+
+<div class="card-body">
+
+<pre>
+student_id,name,email,department,subject1,subject2,subject3,subject4,subject5
+ST101,Rahul,rahul@gmail.com,Computer,80,75,90,88,91
+ST102,Sneha,sneha@gmail.com,IT,72,69,81,76,84
+ST103,Amit,amit@gmail.com,Civil,35,42,39,45,40
+</pre>
+
+<a href="{% static 'sample/student_sample.csv' %}" class="download-btn">
+
+Download Sample CSV
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
